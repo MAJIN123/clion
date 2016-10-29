@@ -6,12 +6,23 @@ struct LinkNode{
     LinkNode<T> *link;
     LinkNode(LinkNode<T> *ptr=NULL){link=ptr;}
     LinkNode(T x,LinkNode<T> *ptr=NULL){link=ptr;data=x;}
-
+    friend ostream& operator<<(ostream& out,const LinkNode<T>& x){
+        return out<<x.data<<endl;
+    }
 };
+
 template <class T>
 class List{
 protected:
     LinkNode<T> *first;
+    friend ostream& operator<<(ostream& out,const List<T>& L){
+        LinkNode<T> *current=L.getHead()->link;
+        while(current){
+            out<<current->data<<endl;
+            current=current->link;
+        }
+        return out;
+    }
 public:
     List(){first=new LinkNode<T>;}        //构造函数
     List(T x){first=new LinkNode<T>(x);}
@@ -25,8 +36,46 @@ public:
     bool getData(int i,T& x)const;
     void setData(int i,T x);
     bool Remove(int i,T& x);            //删第i个元素 用x 带出
-
+    void inputFrount(T endTag);         //前插法建立链表
+    void output();
+    LinkNode<T>* operator=(List<T>& L);     //重载 赋值构造
 };
+
+template <class T>
+LinkNode<T>* List<T>::operator=(List<T> &L) {
+    T value;
+    LinkNode<T> *p=L.getHead();
+    LinkNode<T> *q=first=new LinkNode<T>;
+    while(p->link!=NULL){
+        value=p->link->data;
+        q->link=new LinkNode<T>(value);
+        q=q->link;
+        p=p->link;
+    }
+    q->link=NULL;
+    return first;
+}
+template <class T>
+void List<T>::output() {
+    LinkNode<T> *current=first->link;
+    while(current){
+        cout<<current->data<<endl;
+        current=current->link;
+    }
+}
+template <class T>
+void List<T>::inputFrount(T endTag) {
+    T value;
+    makeEmpty();
+    LinkNode<T> *p=NULL;
+    cin>>value;
+    while(value!=endTag){
+        p=new LinkNode<T>(value);
+        p->link=first->link;
+        first->link=p;
+        cin>>value;
+    }
+}
 template <class T>
 bool List<T>::Remove(int i, T &x) {
     LinkNode<T>* current=Locate(i-1);
@@ -97,14 +146,16 @@ List<T>::List(List<T> &L) {
 }
 template <class T>
 void List<T>::makeEmpty() {
-    LinkNode<T> p=NULL;
+    LinkNode<T> *p=NULL;
     while(first->link!=NULL){
         p=first->link;
-        first->link=p.link;             //any question?
+        first->link=p->link;
         delete p;
     }
 }
 int main() {
-    std::cout << "Hello, World!" << std::endl;
-    return 0;
+    List<int> L;
+    L.output();
+    L.inputFrount(-1);
+    L.output();
 }
