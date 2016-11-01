@@ -22,7 +22,49 @@ public:
     AString& operator+=(AString &ob);//串ob+*this 赋值给*this
     char& operator[](int i);
     //取*this 的第i个元素
+    int Find(AString& pat)const;
+    //在*this找pat的子串，没有则返回-1
+    void getNext(int next[]);
+    int KMPFind(AString& pat,int k,int next[])const;
+    //kmp算法 求从pat的k位开始找子串，返回满足条件的开始位置
 };
+int AString::KMPFind(AString &pat, int k, int *next) const {
+    int posP=0,posT=k;
+    int lengthP=pat.curLength;
+    int lengthT=curLength;
+    while(posP<lengthP&&posT<lengthT){
+        if(posP==-1||pat.ch[posP]==ch[posT]){
+            posP++;posT++;
+        }
+        else posP=next[posP];
+    }
+    if(posP<lengthP)return -1;
+    return posT-lengthP;
+}
+void AString::getNext(int *next) {
+    int k=-1;
+    int i=0;
+    next[0]=-1;
+    while(i<curLength){
+        if(k==-1||ch[i]==ch[k]) {
+            i++;
+            k++;
+            next[i]=k;
+        }
+        else k=next[k];
+    }
+}
+int AString::Find(AString &pat) const {
+    int i,j;
+    for(i=0;i<Length();++i) {
+        for (j = 0; j < pat.Length(); ++i) {
+            if (pat.ch[i]==ch[i+j])
+                break;
+        }//end for j
+        if(j==pat.Length())return i;
+    }//end for i
+    return -1;
+}
 char& AString::operator[](int i) {
     if(i<0||i>=curLength)cout<<"字符串下标越界！"<<endl;
     return ch[i];
