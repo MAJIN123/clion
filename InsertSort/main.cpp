@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 //直接插入排序
-//
+//O(n^2) 稳定排序
 void InsertSort1(int *a,int len){
     for(int i=1;i<len;++i){
         int temp=a[i];
