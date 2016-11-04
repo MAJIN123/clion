@@ -1,4 +1,5 @@
 #include <iostream>
+//稳定排序，O(nlogn)
 using namespace std;
 void BinaryInsertSort(int a[],int len){
     for(int i=1;i<len;++i){
