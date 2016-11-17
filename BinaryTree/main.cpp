@@ -16,14 +16,30 @@ protected:
     void destroy(BinTreeNode<T>* &subTree);       //删除
     int Height(BinTreeNode<T> *subTree);
     int Size(BinTreeNode<T> *subTree);
+    BinTreeNode<T> *copy(BinTreeNode<T> *root);
     BinTreeNode<T>* Parent(BinTreeNode<T>* subTree,BinTreeNode<T>* current);
+    void PreOrder(BinTreeNode<T> *root);            //前序遍历
+    void InOrder(BinTreeNode<T> *root);              //中序便利
+    void PostOrder(BinTreeNode<T> *root);           //后序便利
+    void Travers(BinTreeNode<T>* subTree,ostream& out); //前序遍历输出
+    friend ostream& operator<<(ostream& out,BinaryTree<T> &Tree){
+        //重载输出
+        out<<"二叉树前序遍历输出：\n";
+        Tree.Travers(Tree.root,out);
+        out<<endl;
+        return out;
+    }
+
 public:
     BinaryTree():root(NULL){}               //构造函数
     BinaryTree(T value):RefValue(value),root(NULL){}        //构造函数
-    BinaryTree(BinaryTree<T> &s);
-    ~BinaryTree(){destroy(root);}
+    BinaryTree(BinaryTree<T> &s);                   //复制构造函数
+    ~BinaryTree(){destroy(root);}                   //析构函数
     int Height(){return Height(root);}
     int Size(){return Size(root);}
+    void PreOrder(){PreOrder(root);}
+    void InOrder(){InOrder(root);}
+    void PostOrder(){PostOrder(root);}
     BinTreeNode<T>* Parent(BinTreeNode<T> *current){
         return(root==NULL||root==current)?NULL:Parent(root,current);
     }
@@ -35,7 +51,40 @@ public:
     }
     BinTreeNode<T>* getRoot()const{return root;}
 
+
 };
+template <class T>
+void BinaryTree<T>::Travers(BinTreeNode<T> *subTree, ostream &out) {
+    if(subTree){
+        out<<subTree->data<<" ";
+        Travers(subTree->leftChild,out);
+        Travers(subTree->rightChild,out);
+    }
+}
+template <class T>
+void BinaryTree<T>::PreOrder(BinTreeNode<T> *root) {
+    if(!root)
+        return;
+    cout<<root->data<<" ";
+    PreOrder(root->leftChild);
+    PreOrder(root->rightChild);
+}
+template <class T>
+void BinaryTree<T>::InOrder(BinTreeNode<T> *root) {
+    if(root){
+        InOrder(root->leftChild);
+        cout<<root->data<<" ";
+        InOrder(root->rightChild);
+    }
+}
+template <class T>
+void BinaryTree<T>::PostOrder(BinTreeNode<T> *root) {
+    if(root){
+        PostOrder(root->leftChild);
+        PostOrder(root->rightChild);
+        cout<<root->data<<" ";
+    }
+}
 template <class T>
 BinTreeNode<T>* BinaryTree<T>::Parent(BinTreeNode<T> *subTree, BinTreeNode<T> *current) {
     if(subTree==NULL)return NULL;
@@ -67,7 +116,17 @@ int BinaryTree::Height(BinTreeNode<T> *subTree) {
 }
 template <class T>
 BinaryTree<T>::BinaryTree(BinaryTree<T> &s) {
-
+        root=copy(s.root);
+}
+template <class T>
+BinTreeNode<T>* BinaryTree<T>::copy(BinTreeNode<T> *root) {
+    if(!root)
+        return NULL;
+    BinTreeNode<T> *p=new BinTreeNode<T>;
+    p->data=root->data;
+    p->leftChild=copy(root->leftChild);
+    p->rightChild=copy(root->rightChild);
+    return p;
 }
 template <class T>
 void BinaryTree<T>::destroy(BinTreeNode<T>* &subTree) {
