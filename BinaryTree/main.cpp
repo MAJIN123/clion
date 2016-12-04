@@ -99,7 +99,7 @@ void BinaryTree<T>::Norecursive_PreOrder(BinTreeNode<T> *root) {
     stack<BinTreeNode<T> *> S;
     BinTreeNode<T> *p;
     S.push(root);
-    while(S){
+    while(!S.empty()){
         p=S.top();
         S.pop();
         cout<<p->data<<" ";
