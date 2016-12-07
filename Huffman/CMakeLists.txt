@@ -3,5 +3,5 @@ project(Huffman)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
-set(SOURCE_FILES main.cpp Huffman.h)
+set(SOURCE_FILES main.cpp Huffman.h Min_Heap.h)
 add_executable(Huffman ${SOURCE_FILES})
