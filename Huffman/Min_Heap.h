@@ -4,6 +4,8 @@
 
 #ifndef HUFFMAN_MIN_HEAP_H
 #define HUFFMAN_MIN_HEAP_H
+
+#include<iostream>
 using namespace std;
 template<class T>
 class MinHeap{
