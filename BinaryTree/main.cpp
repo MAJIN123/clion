@@ -26,6 +26,7 @@ protected:
     void Travers(BinTreeNode<T>* subTree,ostream& out); //前序遍历输出
     void Insert(BinTreeNode<T> *&root,T x);//插入
     void Norecursive_PreOrder(BinTreeNode<T>* root);//非递归前序遍历
+    void Norecursive_InOrder(BinTreeNode<T> *root);//非递归中序遍历
    // void CreateBinaryTree(fstream& in,BinTreeNode<T>* &subTree);//建立二叉树
     friend ostream& operator<<(ostream& out,BinaryTree<T> &Tree){
         //重载输出
@@ -44,6 +45,7 @@ public:
     int Size(){return Size(root);}
     void PreOrder(){PreOrder(root);}
     void Norecursive_PreOrder(){Norecursive_PreOrder(root);}//非递归前序遍历
+    void Norecursive_InOrder(){Norecursive_InOrder(root);}//非递归中序遍历
     void InOrder(){InOrder(root);}
     void PostOrder(){PostOrder(root);}
     void Insert(T x){Insert(root,x);}
@@ -79,6 +81,21 @@ void BinaryTree<T>::CreateBinaryTree(fstream &in, BinTreeNode<T> * &subTree) {
     }
 }
  */
+template <class T>
+void BinaryTree<T>::Norecursive_InOrder(BinTreeNode<T> *root) {
+   stack<BinTreeNode<T> *> s;
+    BinTreeNode<T> *p=root;
+    do{
+        while(p){
+            s.push(p);
+            p=p->leftChild;
+        }
+        while(!s.empty()){
+            p=s.top();cout<<p->data<<" ";
+            p=p->rightChild;
+        }
+    }while(p||!s.empty());
+}
 template <class T>
 void BinaryTree<T>::Norecursive_PreOrder(BinTreeNode<T> *root) {
     /*
