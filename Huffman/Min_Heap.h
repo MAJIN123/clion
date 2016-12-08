@@ -51,7 +51,7 @@ void MinHeap<T>::shiftDown(int begin, int end) {
     int j=2*i+1;//左子女位置
     while(j<=end){
         if(j<end&&heap[j]>heap[j+1])++j;//j指向小的子女节点
-        if(heap[j]>=value)break;
+        if(value<=heap[j])break;
         else{
             heap[i]=heap[j];i=j;j=2*i+1;
         }

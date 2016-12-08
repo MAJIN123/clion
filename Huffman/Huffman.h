@@ -7,7 +7,6 @@
 
 #include<iostream>
 #include"Min_Heap.h"
-
 //树节点类定义
 struct HuffmanNode{
     float data;
@@ -15,8 +14,8 @@ struct HuffmanNode{
     HuffmanNode():Lchild(NULL),Rchild(NULL),Parent(NULL){}//构造函数
     HuffmanNode(float elem,HuffmanNode *L=NULL,HuffmanNode *R=NULL,HuffmanNode *P=NULL)
             :data(elem),Lchild(L),Rchild(R),Parent(P){}//构造函数
-    bool operator<=(HuffmanNode *R){return data<=R->data;}
-    bool operator>(HuffmanNode *R){return data>R->data;}
+    bool operator<=(HuffmanNode &R){return data<=R.data;}
+    bool operator>(HuffmanNode &R){return data>R.data;}
 };
 
 class Huffman{
@@ -29,7 +28,7 @@ public:
     Huffman(float w[],int len);//构造函数
     ~Huffman(){delete_Tree(root);}//析构函数
     void PreOrder(){PreOrder(root);}//前序遍历输出以root为根的Huffman树
-    void merge(HuffmanNode &first,HuffmanNode &second,HuffmanNode *&Parent);//合并子树到parent
+    void merge(HuffmanNode &first,HuffmanNode &second,HuffmanNode *&P);//合并子树到parent
 };
 void Huffman::PreOrder(HuffmanNode *root) {
     cout<<"PreOrder:";
@@ -40,30 +39,34 @@ void Huffman::PreOrder(HuffmanNode *root) {
     }
     cout<<endl;
 }
-Huffman::Huffman(float *w, int len) {
-    MinHeap<float> hp;         //定义一个最小堆
-    HuffmanNode first,second;
-    HuffmanNode *Parent;
+Huffman::Huffman(float w[], int len) {
+    MinHeap<HuffmanNode> hp;         //定义一个最小堆
+    cout<<1222;
+    HuffmanNode first,second,work;
+    HuffmanNode *P;
     for(int i=0;i<len;++i){
-        hp.insert(w[i]);
+        work.data=w[i];
+        work.Lchild=NULL;
+        work.Rchild=NULL;
+        work.Parent=NULL;
+        hp.insert(work);
     }
-    float s1,s2;
     for(int i=0;i<len-1;++i){
-        hp.remove(s1);
-        hp.remove(s2);
-        first.data=s1;first.Rchild=first.Lchild=NULL;
-        second.data=s2;second.Rchild=second.Lchild=NULL;
-        merge(first,second,Parent);
-        hp.insert((*Parent).data);
+        hp.remove(first);
+        hp.remove(second);
+        cout<< first.data;
+        merge(first,second,P);
+
+        hp.insert(*P);
     }
-    root=Parent;//建立根节点
+    root=P;//建立根节点
 }
-void Huffman::merge(HuffmanNode &first, HuffmanNode &second, HuffmanNode *&Parent) {
-    Parent=new HuffmanNode;
-    Parent->Lchild=&first;
-    Parent->Rchild=&second;
-    Parent->data=first.data+second.data;
-    first.Parent=second.Parent=Parent;
+void Huffman::merge(HuffmanNode &first, HuffmanNode &second, HuffmanNode *&P) {
+    P=new HuffmanNode;
+    P->Lchild=&first;
+    P->Rchild=&second;
+    P->data=first.data+second.data;
+    first.Parent=second.Parent=P;
 }
 void Huffman::delete_Tree(HuffmanNode *root) {
     while(root){
