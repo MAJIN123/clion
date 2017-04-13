@@ -19,23 +19,30 @@ using namespace std;
 class Solution_3 {
 public:
     int lengthOfLongestSubstring(string s) {
-        int length=s.length();
-        int max;
+        if(s.length()==0)
+            return 0;
+        int max=1;
         int start=0,size=1;
-        int begin=0,end=length-1;
-        int hash[24]={0};
-        for(int i=i;i<length;++i){
-            hash[s[start]-97]++;
-            if(hash[s[i]]<1){//s[i]在start开始size长度里没出现过
-                size++;
-            }
-            else{
-                start=i;
+        bool flag;
+        int x;
 
-            }
-        }
+        for(int i=1;i<s.length();++i){
+            flag=0;x=1;
+           for(int j=start;j<size+start;++j){
+               if(s[j]==s[i]){//出现过
+                   x=j-start;
+                   start=j+1;
+                   flag=1;
+                   break;
+               }
+           }//end for j
+            if(!flag)
+                size+=1;
+            else
+                size-=x;
+            max=max>size?max:size;
+        }//end for i
 
-
-        return 1;
+        return max;
     }
 };
