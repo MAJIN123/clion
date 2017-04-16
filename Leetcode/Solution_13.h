@@ -14,6 +14,10 @@ using namespace std;
  *
  * Input is guaranteed to be within the range from 1 to 3999.
  */
+/*
+罗马字符    I   V   X   L   C   D   M
+整数数字    1   5   10  50  100 500 1000
+ */
 class Solution_13 {
 public:
     int romanToInt(string s) {
