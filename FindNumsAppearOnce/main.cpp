@@ -1,37 +1,39 @@
 #include <iostream>
 using namespace std;
-int FindFirstBitIs1(int x){
+int FindFirsbitIs1(int &num){
     int index=0;
-    while((x&1)==0&&index<8*sizeof(int)){
-        x=x>>1;
-        ++index;
+    while(((num&1)==0)&&(index<8*sizeof(int))){
+        num=num>>1;
+        index++;
     }
     return index;
 }
-bool IsBit1(int x,int index){
-    x=x>>index;
-    return (x&1);
+bool IsBit1(int num,int index){
+    num=num>>index;
+    return (num&1);
 }
 void FindNumsAppearOnce(int *data,int length,int &num1,int &num2){
     if(data==NULL||length<2)
         return;
-    int result=0;
+    int tmp=0;
     for(int i=0;i<length;++i)
-        result=result^data[i];
-    int indexOf1=FindFirstBitIs1(result);
-    for(int j=0;j<length;++j){
-        if(IsBit1(data[j],indexOf1))
-            num1^=data[j];
+        tmp^=data[i];
+    int index=FindFirsbitIs1(tmp);
+    num1=num2=0;
+    for(int i=0;i<length;++i){
+        if(IsBit1(data[i],index))
+            num1^=data[i];
         else
-            num2^=data[j];
+            num2^=data[i];
     }
 }
-
 int main() {
-    int a[10]={1,2,3,3,5,5,6,7,7,6};
-    int x=0;
-    int y=0;
-    FindNumsAppearOnce(a,10,x,y);
-    cout<<x<<y;
+    //数组只有两个数出现一次，其他的数出现两次，找出出现一次的数
+    int a[]={2,4,3,6,3,2,5,5};
+    int x,y;
+    FindNumsAppearOnce(a,8,x,y);
+    cout<<x<<endl;
+    cout<<y<<endl;
+
     return 0;
 }
