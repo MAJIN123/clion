@@ -21,27 +21,32 @@ class Solution_20 {
 public:
     bool isValid(string s) {
         stack<char> stack_char;
-        for(char &ch:s){
-            switch(ch){
+        for (char &ch:s) {
+            switch (ch) {
                 case '(':
                 case '{':
-                case '[': stack_char.push(ch); break;
-                case ')': if(stack_char.empty()||stack_char.top()!='(')
+                case '[':
+                    stack_char.push(ch);
+                    break;
+                case ')':
+                    if (stack_char.empty() || stack_char.top() != '(')
                         return false;
                     else
                         stack_char.pop();
                     break;
-                case '}': if(stack_char.empty()||stack_char.top()!='{')
+                case '}':
+                    if (stack_char.empty() || stack_char.top() != '{')
                         return false;
                     else
                         stack_char.pop();
                     break;
-                case ']': if(stack_char.empty()||stack_char.top()!='[')
+                case ']':
+                    if (stack_char.empty() || stack_char.top() != '[')
                         return false;
                     else
                         stack_char.pop();
                     break;
-                default: ;
+                default:;
             }
         }
         return stack_char.empty();
