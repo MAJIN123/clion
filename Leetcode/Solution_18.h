@@ -16,6 +16,11 @@ using namespace std;
  */
 class Solution_18 {
 public:
+    /**
+     * @param nums : a vector contains some int nums
+     * @param target : a int value
+     * @return
+     */
     vector<vector<int>> fourSum(vector<int>& nums, int target) {
         if(nums.size()<4)
             return vector<vector<int> >();
