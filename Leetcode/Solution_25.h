@@ -21,6 +21,12 @@ struct ListNode {
 };
 class Solution_25 {
 public:
+    /**
+     * Reverse Nodes in k-Group
+     * @param head
+     * @param k
+     * @return
+     */
     ListNode *reverseKGroup(ListNode *head, int k) {
         if (!head)
             return head;
