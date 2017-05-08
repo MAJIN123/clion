@@ -10,6 +10,18 @@ using namespace std;
 #define LEETCODE_SOLUTION_39_H
 
 #endif //LEETCODE_SOLUTION_39_H
+/**
+ *  Given a set of candidate numbers (C) (without duplicates) and a target number (T),
+ *  find all unique combinations in C where the candidate numbers sums to T.
+ *  The same repeated number may be chosen from C unlimited number of times.
+ */
+/*
+ * A solution set is:
+[
+  [7],
+  [2, 2, 3]
+]
+ */
 class Solution_39 {
 public:
     /**
