@@ -55,4 +55,23 @@ public:
 
         return res;
     }
+
+    string another(string nums1, string nums2) {
+        string res(nums1.size() + nums2.size(), '0');
+        for (int i = nums1.size() - 1; i >= 0; --i) {
+            int flag = 0;
+            for (int j = nums2.size() - 1; j >= 0; --j) {
+                int tmp = (res[i + j - 1] - '0') + (nums1[i] - '0') * (nums2[j] - '0') + flag;
+                flag = tmp / 10;
+                res[i + j - 1] = tmp % 10 + '0';
+            }
+            res[i] += flag;
+        }
+        size_t index = res.find_first_not_of('0');
+        if (string::npos != index)
+            return res.substr(index);
+        return "0";
+
+    }
+
 };
