@@ -24,6 +24,11 @@ The minimum number of jumps to reach the last index is 2.
  */
 class Solution_45 {
 public:
+    /**
+     *  Jump Game II
+     * @param nums
+     * @return steps needed to climb
+     */
     int jump(vector<int> &nums) {
         int n = nums.size(), step = 0, begin = 0, end = 0;
         while (end < n - 1) {
