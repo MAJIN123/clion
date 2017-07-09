@@ -40,7 +40,7 @@ public:
                 if ((i + k) >= words.size())
                     tmp += " ";
                 else
-                    tmp += string((maxWidth - 1) / (k - 1) + (j < (maxWidth - l) % (k - 1)), ' ');
+                    tmp += string((maxWidth - l) / (k - 1) + (j < (maxWidth - l) % (k - 1)), ' ');
                 tmp += words[j + i + 1];
             }
             tmp += string(maxWidth - tmp.size(), ' ');
